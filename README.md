@@ -8,10 +8,10 @@
       2）如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,是就并入查询结果集
     
 
-查询代码：
+`查询代码：
 
 
-`select  DISTINCT M.MenuID,M.MenuNo,M.MenuName
+select  DISTINCT M.MenuID,M.MenuNo,M.MenuName
 from cf_privilege P left join sys_menu M on P.PrivilegeAccessKey=M.MenuID,cf_user U
 where (
 (P.PrivilegeMasterKey=U.UserID and U.LoginName='test1' and P.PrivilegeMaster='CF_User' ) 
@@ -37,10 +37,10 @@ where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1')
       
   
 
-查询代码：
+`查询代码：
 
 
-`select DISTINCT B.BtnName,B.BtnID
+select DISTINCT B.BtnName,B.BtnID
 from cf_privilege P left join sys_button B on P.PrivilegeAccessKey=B.BtnID,cf_user U,sys_menu M 
 where (
 (P.PrivilegeMasterKey=U.UserID and U.LoginName='test1' and P.PrivilegeMaster='CF_User' ) 
