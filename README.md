@@ -1,11 +1,11 @@
 ##查询用户test1可以查看的页面（Sys_menu）：
-   ` 伪代码： 
+   伪代码： 
     1.	在cf_role中查找LoginName为test1的用户的UserID
     2.	在cf_userrole中查找test1的角色的RoleID
     3.	cf_privilege与sys_menu进行左连接
     4.	在cf_privilege中遍历， PrivilegeAccess='Sys_Menu' 、 PrivilegeOperation='Permit'且if PrivilegeMaster字段
-    1）	如果是CF_User,则判断PrivilegeMasterKey是否等于在第一步中查找的UserID,是就并入查询结果集
-    2）	如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,是就并入查询结果集`
+         1）	如果是CF_User,则判断PrivilegeMasterKey是否等于在第一步中查找的UserID,是就并入查询结果集
+         2）	如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,是就并入查询结果集
     
     
     `查询代码：
