@@ -28,7 +28,7 @@ where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1')
     1.在cf_role中查找LoginName为test1的用户的UserID
     2.在cf_userrole中查找test1的角色的RoleID
     3.cf_privilege与sys_menu进行左连接
-    4.在cf_privilege中遍历，P.PrivilegeAccess='Sys_Button' 、PrivilegeOperation='Permit' 、M.MenuName='订单'、sys_Menu.MenuNo=sys_Menu.MenuNo且if PrivilegeMaster字段   
+    4.在cf_privilege中遍历，P.PrivilegeAccess='Sys_Button' 、PrivilegeOperation='Permit' 、M.MenuName='订单' 、sys_Menu.MenuNo=sys_Menu.MenuNo且if PrivilegeMaster字段   
       1）如果是CF_User,则判断PrivilegeMasterKey是否等于在第一步中查找的UserID,是就并入查询结果集
       2）如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,是就并入查询结果集
       
