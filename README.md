@@ -10,8 +10,7 @@
 
 <pre>
 查询代码：
-use db_mediaplayer;
-select  P.PrivilegeMaster,P.PrivilegeAccess,M.MenuName
+select  M.MenuID,M.MenuNo,M.MenuName
 from cf_privilege P left join sys_menu M on P.PrivilegeAccessKey=M.MenuID and P.PrivilegeAccess='Sys_Menu'
 where (
 ( P.PrivilegeMaster='CF_User' AND P.PrivilegeMasterKey=(select U.UserID from cf_user U where U.LoginName='test1')) 
