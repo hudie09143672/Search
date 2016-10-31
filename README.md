@@ -8,17 +8,20 @@
       2）如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,是就并入查询结果集
     
 
-`查询代码：
-select  DISTINCT M.MenuID,M.MenuNo,M.MenuName
-from cf_privilege P left join sys_menu M on P.PrivilegeAccessKey=M.MenuID,cf_user U
+<pre>
+查询代码：
+use db_mediaplayer;
+select  P.PrivilegeMaster,P.PrivilegeAccess,M.MenuName
+from cf_privilege P left join sys_menu M on P.PrivilegeAccessKey=M.MenuID and P.PrivilegeAccess='Sys_Menu'
 where (
-(P.PrivilegeMasterKey=U.UserID and U.LoginName='test1' and P.PrivilegeMaster='CF_User' ) 
-or (P.PrivilegeMaster='CF_Role' and P.PrivilegeMasterKey =
+( P.PrivilegeMaster='CF_User' AND P.PrivilegeMasterKey=(select U.UserID from cf_user U where U.LoginName='test1')) 
+or (P.PrivilegeMaster='CF_Role' and P.PrivilegeMasterKey IN
 (select U_R.RoleID
 from cf_role R,cf_user U,cf_userrole U_R 
 where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1')
 )
-) and P.PrivilegeAccess='Sys_Menu'  and PrivilegeOperation='Permit';`
+)   and PrivilegeOperation='Permit' and P.PrivilegeAccess='Sys_Menu';
+</pre>
 
 ![p1](images/1.png)
 
@@ -34,18 +37,18 @@ where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1')
       
       
   
-
-`查询代码：
-select DISTINCT B.BtnName,B.BtnID
-from cf_privilege P left join sys_button B on P.PrivilegeAccessKey=B.BtnID,cf_user U,sys_menu M 
+<pre>
+查询代码：
+select B.BtnName,B.BtnID
+from cf_privilege P left join sys_button B on P.PrivilegeAccessKey=B.BtnID and P.PrivilegeAccess='Sys_Button',sys_menu M
 where (
-(P.PrivilegeMasterKey=U.UserID and U.LoginName='test1' and P.PrivilegeMaster='CF_User' ) 
+( P.PrivilegeMaster='CF_User' AND P.PrivilegeMasterKey=(select U.UserID from cf_user U where U.LoginName='test1') ) 
 or (P.PrivilegeMaster='CF_Role' and P.PrivilegeMasterKey =
 (select U_R.RoleID
 from cf_role R,cf_user U,cf_userrole U_R 
 where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1')
 )
-) and P.PrivilegeAccess='Sys_Button' and PrivilegeOperation='Permit' AND M.MenuName='订单' and B.MenuNo=M.MenuNo;`
-
+) and  M.MenuName='订单' and B.MenuNo=M.MenuNo  and PrivilegeOperation='Permit';
+</pre>
 
 ![p2](images/2.png)
